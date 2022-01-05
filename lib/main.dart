@@ -17,10 +17,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.jetBrainsMonoTextTheme(),
       ),
@@ -37,7 +37,7 @@ class PomodoroClock extends StatefulWidget {
 }
 
 class _PomodoroClockState extends State<PomodoroClock> {
-  bool _isWorking = false;
+  bool _isWorking = true;
   bool _isPaused = false;
   bool _isPlaying = false;
   String _currentTime = "25:00";
@@ -181,9 +181,10 @@ class _PomodoroClockState extends State<PomodoroClock> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Clock(currentTime: _currentTime),
                 Label(

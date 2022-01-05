@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Label extends StatelessWidget {
-  Label(
+  const Label(
       {Key? key,
       required this.working,
       required this.paused,
@@ -16,7 +16,9 @@ class Label extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          height: (playing || paused) ? 100 : 0,
           padding: const EdgeInsets.symmetric(
             vertical: 25,
           ),
@@ -29,7 +31,9 @@ class Label extends StatelessWidget {
             ),
           ),
         ),
-        Container(
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          height: (((!paused && !playing) || (paused)) ? 60 : 0),
           padding: const EdgeInsets.symmetric(
             vertical: 10,
           ),

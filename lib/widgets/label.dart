@@ -25,35 +25,39 @@ class Label extends StatelessWidget {
           child: Center(
             child: Text(
               working ? 'Work Time' : 'Break Time',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 40,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),
         ),
         AnimatedContainer(
           duration: const Duration(milliseconds: 100),
-          height: (((!paused && !playing) || (paused)) ? 60 : 0),
+          height: (((!paused && !playing) || (paused)) ? 60 : 46),
           padding: const EdgeInsets.symmetric(
             vertical: 10,
           ),
           child: Column(
             children: [
               if (!paused && !playing)
-                const Center(
+                Center(
                   child: Text(
                     'Press Play to Start',
                     style: TextStyle(
                       fontSize: 20,
+                      color: Theme.of(context).primaryColor,
+
                     ),
                   ),
                 ),
               if (paused)
-                const Center(
+                Center(
                   child: Text(
                     'Paused',
                     style: TextStyle(
                       fontSize: 20,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),

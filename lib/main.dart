@@ -23,7 +23,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.jetBrainsMonoTextTheme(),
+        backgroundColor: Colors.white,
+        primaryColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.black),
+        brightness: Brightness.light,
       ),
+      darkTheme: ThemeData(
+        textTheme: GoogleFonts.jetBrainsMonoTextTheme(),
+        backgroundColor: Colors.blueGrey.shade900,
+        primaryColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.system,
       home: const PomodoroClock(),
     );
   }
@@ -46,6 +58,15 @@ class _PomodoroClockState extends State<PomodoroClock> {
   Timer? _timer;
   bool _shouldVibrate = true;
   bool _shouldSound = true;
+  bool _canVibrate = false;
+
+  _PomodoroClockState() {
+    checkVibrate();
+  }
+
+  checkVibrate() async {
+    _canVibrate = (await Vibration.hasVibrator())!;
+  }
 
   String getTime(String val) {
     return leftPadding(val) + ':00';
@@ -89,7 +110,7 @@ class _PomodoroClockState extends State<PomodoroClock> {
             const Duration(
               seconds: 1,
             ),
-            countdown);
+            countdown,);
         _isPaused = false;
         _isPlaying = true;
       });
@@ -124,7 +145,7 @@ class _PomodoroClockState extends State<PomodoroClock> {
 
   void countdown(_) async {
     if (_currentTime == '00:00' && _isPlaying) {
-      if (_shouldVibrate) {
+      if (_shouldVibrate && _canVibrate) {
         Vibration.vibrate();
       }
       if (_shouldSound) {
@@ -179,6 +200,7 @@ class _PomodoroClockState extends State<PomodoroClock> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
@@ -216,7 +238,12 @@ class _PomodoroClockState extends State<PomodoroClock> {
                     Expanded(
                       child: Column(
                         children: [
-                          const Text('Work Time (min)'),
+                          Text(
+                            'Work Time (min)',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
                           TimeSelect(
                               selected: int.parse(_workTime.substring(0, 2))
                                   .toString(),
@@ -227,7 +254,11 @@ class _PomodoroClockState extends State<PomodoroClock> {
                     Expanded(
                       child: Column(
                         children: [
-                          const Text('Break Time (min)'),
+                          Text(
+                            'Break Time (min)',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                          ),
                           TimeSelect(
                               selected: int.parse(_breakTime.substring(0, 2))
                                   .toString(),
@@ -248,7 +279,7 @@ class _PomodoroClockState extends State<PomodoroClock> {
                     ),
                     Icon(
                       Icons.vibration_rounded,
-                      color: _shouldVibrate ? Colors.black : Colors.grey,
+                      color: _shouldVibrate ? Theme.of(context).primaryColor : Colors.grey,
                     )
                   ],
                 ),
@@ -265,7 +296,7 @@ class _PomodoroClockState extends State<PomodoroClock> {
                       _shouldSound
                           ? Icons.volume_up_rounded
                           : Icons.volume_mute_rounded,
-                      color: _shouldSound ? Colors.black : Colors.grey,
+                      color: _shouldSound ? Theme.of(context).primaryColor : Colors.grey,
                     )
                   ],
                 ),

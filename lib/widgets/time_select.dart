@@ -15,7 +15,9 @@ class TimeSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButton(
-      style: Theme.of(context).textTheme.button,
+      style: TextStyle(
+        color: Theme.of(context).primaryColor,
+      ),
       borderRadius: BorderRadius.circular(5),
       value: selected,
       items: list.map<DropdownMenuItem<String>>((String value) {

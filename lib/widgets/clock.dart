@@ -12,13 +12,17 @@ class Clock extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         border: Border.all(
+          color: Theme.of(context).primaryColor,
           width: 2,
         ),
       ),
       child: Center(
         child: Text(
           currentTime,
-          style: const TextStyle(fontSize: 50),
+          style: TextStyle(
+            fontSize: 50,
+            color: Theme.of(context).primaryColor,
+          ),
         ),
       ),
     );
